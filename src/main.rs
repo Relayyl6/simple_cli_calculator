@@ -140,7 +140,7 @@ fn subtraction(values: Vec<f64>) -> f64 {
     return res;
 }
 
-fn multiplication(values: Vec<f64>) -> f64 {
+fn multiplication(values: Vec<f64>) -> f64 { // This is a really pretty implementation
     let mut res = 1.0;
     for x in values {
         res *= x;
@@ -165,7 +165,15 @@ fn cpga_calculator(total_grade_point: f64, total_credit_hours: f64) -> f64 {
 }
 
 fn handle_space_sep_values(space_sep_values: String) -> Vec<String> {
-    let values: Vec<String> = space_sep_values.split(" ").map(|f| f.trim().parse::<String>().expect("You entered an invalid input, please make sure that the values are integers and are seperated by a space")).collect();
+    // I am confused by this, so
+    // let values: Vec<String> = space_sep_values.split(" ").map(|f| f.trim().parse::<String>().expect("You entered an invalid input, please make sure that the values are integers and are seperated by a space")).collect();
+    let values: Vec<String> = space_sep_values
+                                        .split(' ') // Split each element in the entered input, into sperate strings anytime there's a space eg "1 + 2" becomes "1", "+", "2"
+                                        .filter(|s| !s.is_empty()) // to skip any empty string 
+                                        .map(|f| f.trim()
+                                                  .to_String()) // Simple conversion
+                                        .collect() // collects the String into a Vector of Strings                                          
+        
     return values;
 }
 
@@ -194,7 +202,7 @@ fn pow(values: Vec<f64>) -> f64 {
 
 fn handle_values(mut values: Vec<String>) -> f64{
     let mut ptr: usize = 0;
-    let operations = [ "**","*", "/", "+", "-",];
+    let operations = [ "**", "*", "/", "+", "-",];
     // println!("{:?}", values);
     for operation in operations {
         'operation: loop {
